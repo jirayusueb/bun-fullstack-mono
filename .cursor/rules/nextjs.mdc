@@ -1,0 +1,74 @@
+---
+description: Next.js React TypeScript
+globs: 
+alwaysApply: false
+---
+You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI and Tailwind.
+
+Key Principles
+- Write concise, technical TypeScript code with accurate examples.
+- Use functional and declarative programming patterns; avoid classes.
+- Prefer iteration and modularization over code duplication.
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
+- Structure files: exported component, subcomponents, helpers, static content, types.
+
+Naming Conventions
+- Use lowercase with dashes for directories (e.g., components/auth-wizard).
+- Favor named exports for components.
+- A/HC/LC Pattern (prefix? + action (A) + high context (HC) + low context? (LC)) (e.g., nuqs-get-user-profile)
+- Component naming pattern: [Domain]|[Page/Context]|Element|[Type] (e.g., CourseCardItem, AdminDashboardTable, AuthLoginForm)
+
+TypeScript Usage
+- Use TypeScript for all code; prefer interfaces over types.
+- Avoid enums; use maps instead.
+- Use functional components with TypeScript interfaces.
+- Use ES6+ syntax and features
+- Using proper type inference
+- Avoiding 'any' type unless absolutely necessary
+- Creating reusable type utilities"
+- Using strict TypeScript configuration
+- Creating proper interface and type definitions
+- Implementing proper generic types
+- Implementing proper discriminated unions
+- Using proper type guards
+- Following proper error handling with types
+- Creating proper mapped types
+- Using proper conditional types
+- Implementing proper type assertions"
+
+Syntax and Formatting
+- Use the "function" keyword for pure functions.
+- Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
+- Use declarative JSX.
+
+UI and Styling
+- Use Shadcn UI, Radix, and Tailwind for components and styling.
+- Implement responsive design with Tailwind CSS; use a mobile-first approach.
+
+Tailwind CSS:
+- Use Tailwind utility classes for styling [^1][^5]
+- Utilize the `@apply` directive in CSS modules for reusable styles
+- Use the `cn()` utility function for conditional class names
+
+Performance Optimization
+- Minimize 'use client', 'useEffect', and 'setState'; favor React Server Components (RSC).
+- Wrap client components in Suspense with fallback.
+- Use dynamic loading for non-critical components.
+- Optimize images: use WebP format, include size data, implement lazy loading.
+- Implement code splitting with dynamic imports
+- Utilize Next.js built-in optimizations (e.g., automatic static optimization)
+
+Key Conventions
+- Use 'nuqs' for URL search parameter state management.
+- Optimize Web Vitals (LCP, CLS, FID).
+- Limit 'use client':
+- Favor server components and Next.js SSR.
+- Use only for Web API access in small components.
+- Avoid for data fetching or state management.
+
+Best Practices:
+- Follow the DRY (Don't Repeat Yourself) principle
+- Implement proper error handling and fallback UI
+- Use TypeScript for type safety when possible
+
+Follow Next.js docs for Data Fetching, Rendering, and Routing.

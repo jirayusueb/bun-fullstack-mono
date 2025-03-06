@@ -1,0 +1,184 @@
+---
+description: Folder Structure
+globs: 
+alwaysApply: false
+---
+# Project Folder Structure
+
+## Root Structure
+```
+├── src/
+│   ├── app/
+│   ├── assets/
+│   ├── components/
+│   ├── containers/
+│   ├── features/
+│   ├── hooks/
+│   ├── lib/
+│   ├── schemas/
+│   └── types/
+├── public/
+└── tests/
+```
+
+## Detailed Structure
+
+### `src/app/`
+```
+app/
+├── (auth)/
+│   ├── login/
+│   └── register/
+├── (marketing)/
+│   ├── about/
+│   └── contact/
+├── (shop)/
+│   ├── products/
+│   │   └── [productId]/
+│   └── categories/
+│       └── [categoryId]/
+├── layout.tsx
+└── page.tsx
+```
+
+### `src/components/`
+```
+components/
+├── providers/
+│   ├── modal-provider.tsx
+│   └── theme-provider.tsx
+├── share/
+│   ├── product-card/
+│   │   ├── index.tsx
+│   │   └── product-card-price.tsx
+│   ├── button/
+│   └── input/
+└── ui/
+    └── ...shadcn/
+```
+
+### `src/containers/`
+```
+containers/
+├── home-page/
+│   ├── flash-sale-section/
+│   │   └── index.tsx
+│   └── index.tsx
+└── product-detail-page/
+    └── index.tsx
+```
+
+### `src/features`
+```
+containers/
+├── auth/
+│   ├── apis/
+│   │   │── auth.key.tsx
+│   │   └── auth.api.tsx
+│   ├── components/
+│   ├── hooks/
+│   │   │── use-get-auth-detail.tsx
+│   │   │── use-get-auth-list.tsx
+│   │   │── use-update-auth.tsx
+│   │   │── use-delete-auth.tsx
+│   │   └── use-create-auth.tsx
+│   ├── schemas/
+│   │   └── auth.schema.tsx
+│   ├── types/
+│   │   └── auth.type.tsx
+│   └── utils/
+└── address/
+```
+
+
+### `src/hooks/`
+```
+hooks/
+├── use-debounce.ts
+├── use-media-query.ts
+└── use-scroll-position.ts
+```
+
+### `src/lib/`
+```
+lib/
+├── api/
+│   └── client.ts
+├── config/
+│   └── site.ts
+├── utils/
+│   ├── format.ts
+│   └── validation.ts
+└── constants/
+    └── routes.ts
+```
+
+### `src/schemas/`
+```
+schemas/
+├── product.ts
+├── user.ts
+└── order.ts
+```
+
+### `src/types/`
+```
+types/
+├── api.ts
+├── product.ts
+└── common.ts
+```
+
+## Key Directories Explained
+
+### `app/`
+- Next.js App Router structure
+- Route groups in parentheses (e.g., `(auth)`, `(shop)`)
+- API routes under `api/`
+
+### `components/`
+- `providers/`: App-wide providers and contexts
+- `share/`: Reusable components across the application
+- `ui/`: UI components including shadcn integration
+
+### `containers/`
+- Page-specific components and layouts
+- Organized by feature/page
+- Contains business logic and composition of components
+
+### `lib/`
+- `api/`: API client configurations
+- `config/`: Application configuration
+- `utils/`: Utility functions
+- `constants/`: Application constants
+
+### `server/`
+- `actions/`: Server actions for data mutations
+- `api/`: API route handlers
+- `db/`: Database schema and configurations
+
+### `types/`
+- TypeScript type definitions
+- Shared interfaces and types
+- API response types
+
+## Naming Conventions
+
+- Directories: lowercase with dashes (kebab-case)
+- Components: PascalCase
+- Files: lowercase with dashes
+- Types/Interfaces: PascalCase
+
+## File Organization Rules
+
+1. Group related files in feature directories
+2. Keep component files close to their styles and tests
+3. Use index files for cleaner imports
+4. Separate client and server code
+5. Group routes logically using route groups
+
+## Import Conventions
+
+- Use absolute imports from `src/`
+- Avoid deep relative imports
+- Group imports by type (external, internal, types)
