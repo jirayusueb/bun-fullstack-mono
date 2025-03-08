@@ -3,12 +3,20 @@
   "type": "module",
   "version": "1.0.50",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --target node --outdir dist",
+    "test": "bun test",
+    "lint": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
-    "elysia": "latest"
+    "@elysiajs/swagger": "^1.2.2",
+    "@t3-oss/env-core": "^0.12.0",
+    "elysia": "latest",
+    "logixlysia": "^4.1.2",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "bun-types": "latest"
