@@ -1,10 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useForgotPasswordLogic } from "./forgot-password-logic";
 
 // UI Components
 import { Button } from "@workspace/ui/components/button";
@@ -27,51 +24,14 @@ import {
   CardTitle,
 } from "@workspace/ui/components/card";
 
-// Define the form schema
-const forgotPasswordSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-});
-
-// Define the form types
-type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
-
 /**
- * Form component for handling forgot password functionality
+ * View layer for the forgot password form
+ * Handles UI rendering and user interactions
  */
 export function ForgotPasswordForm() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState("");
-  const [submittedEmail, setSubmittedEmail] = useState("");
-
-  // Initialize form with react-hook-form
-  const form = useForm<ForgotPasswordFormValues>({
-    resolver: zodResolver(forgotPasswordSchema),
-    defaultValues: {
-      email: "",
-    },
-  });
-
-  const onSubmit = async (values: ForgotPasswordFormValues) => {
-    setIsLoading(true);
-    setError("");
-
-    try {
-      // Here you would typically call your API to send a password reset email
-      // const response = await sendPasswordResetEmail(values.email);
-
-      // For now, we'll just simulate a successful submission
-      console.log("Password reset requested for:", values.email);
-
-      // Show success message
-      setSubmittedEmail(values.email);
-      setIsSubmitted(true);
-      setIsLoading(false);
-    } catch (err) {
-      setError("Failed to send reset link. Please try again.");
-      setIsLoading(false);
-    }
-  };
+  // Get form logic
+  const { form, onSubmit, isLoading, isSubmitted, error, submittedEmail } =
+    useForgotPasswordLogic();
 
   if (isSubmitted) {
     return (

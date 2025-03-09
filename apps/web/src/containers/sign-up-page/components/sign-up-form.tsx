@@ -1,10 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useSignUpLogic } from "./sign-up-logic";
 
 // UI Components
 import { Button } from "@workspace/ui/components/button";
@@ -22,62 +19,17 @@ import {
 } from "@workspace/ui/components/form";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 
-// Define the form schema
-const signUpSchema = z.object({
-  name: z.string().min(1, "Full name is required"),
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
-  terms: z.boolean().refine((val) => val === true, {
-    message: "You must accept the terms and conditions",
-  }),
-});
-
-// Define the form types
-type SignUpFormValues = z.infer<typeof signUpSchema>;
-
 interface SignUpFormProps {
   onSuccess: () => void;
 }
 
 /**
- * Form component for handling sign-up functionality
+ * View layer for the sign-up form
+ * Handles UI rendering and user interactions
  */
 export function SignUpForm({ onSuccess }: SignUpFormProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  // Initialize form with react-hook-form
-  const form = useForm<SignUpFormValues>({
-    resolver: zodResolver(signUpSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      terms: false,
-    },
-  });
-
-  const onSubmit = async (values: SignUpFormValues) => {
-    setIsLoading(true);
-    setError("");
-
-    try {
-      // Here you would typically call your API to register the user
-      // const response = await registerUser({ name: values.name, email: values.email, password: values.password });
-
-      // For now, we'll just simulate a successful registration
-      console.log("Sign up attempt with:", {
-        name: values.name,
-        email: values.email,
-      });
-
-      // Call the success callback
-      onSuccess();
-    } catch (err) {
-      setError("Failed to create account. Please try again.");
-      setIsLoading(false);
-    }
-  };
+  // Get form logic
+  const { form, onSubmit, isLoading, error } = useSignUpLogic(onSuccess);
 
   return (
     <div className="mt-8">

@@ -1,11 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useSignInLogic } from "./sign-in-logic";
 
 // UI Components
 import { Button } from "@workspace/ui/components/button";
@@ -22,54 +18,13 @@ import {
 } from "@workspace/ui/components/form";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 
-// Define the form schema
-const signInSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(1, "Password is required"),
-  rememberMe: z.boolean().optional(),
-});
-
-// Define the form types
-type SignInFormValues = z.infer<typeof signInSchema>;
-
 /**
- * Form component for handling sign-in functionality
+ * View layer for the sign-in form
+ * Handles UI rendering and user interactions
  */
 export function SignInForm() {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  // Initialize form with react-hook-form
-  const form = useForm<SignInFormValues>({
-    resolver: zodResolver(signInSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
-  });
-
-  const onSubmit = async (values: SignInFormValues) => {
-    setIsLoading(true);
-    setError("");
-
-    try {
-      // Here you would typically call your authentication service
-      // const response = await signIn({ email: values.email, password: values.password });
-
-      // For now, we'll just simulate a successful login
-      console.log("Sign in attempt with:", { email: values.email });
-
-      // Redirect after successful login
-      // router.push('/dashboard');
-
-      setIsLoading(false);
-    } catch (err) {
-      setError("Invalid email or password");
-      setIsLoading(false);
-    }
-  };
+  // Get form logic
+  const { form, onSubmit, isLoading, error } = useSignInLogic();
 
   return (
     <div className="mt-8">
