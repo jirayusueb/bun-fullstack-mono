@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSignInLogic } from "./sign-in-logic";
+import { useSignInForm } from "../hooks/use-sign-in-form";
 
 // UI Components
 import { Button } from "@workspace/ui/components/button";
@@ -19,12 +19,12 @@ import {
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 
 /**
- * View layer for the sign-in form
+ * Sign-in form component
  * Handles UI rendering and user interactions
  */
 export function SignInForm() {
-  // Get form logic
-  const { form, onSubmit, isLoading, error } = useSignInLogic();
+  // Get form logic from the hook
+  const { form, onSubmit, isLoading, error } = useSignInForm();
 
   return (
     <div className="mt-8">
