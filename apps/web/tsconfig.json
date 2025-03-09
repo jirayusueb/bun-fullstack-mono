@@ -10,7 +10,9 @@
       "@/hooks/*": ["./src/hooks/*"],
       "@workspace/ui/*": ["../../packages/ui/src/*"],
       "@workspace/api": ["../api/src/index.ts"],
-      "@workspace/api/*": ["../api/src/*"]
+      "@workspace/api/*": ["../api/src/*"],
+      "@workspace/api-types": ["../api/src/shared/domain/types/index.ts"],
+      "@workspace/api-types/*": ["../api/src/shared/domain/types/*"]
     },
     "plugins": [
       {

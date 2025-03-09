@@ -1,16 +1,9 @@
-'use client';
+"use client";
 
-import { UseQueryOptions, useQuery } from '@tanstack/react-query';
-import { clientApi } from '@/lib/api/client';
-import { utilsKeys } from './keys';
-
-export interface ApiHealthResponse {
-  status: string;
-  timestamp: string;
-  uptime: number;
-  version: string;
-  environment: string;
-}
+import { UseQueryOptions, useQuery } from "@tanstack/react-query";
+import { clientApi } from "@/lib/api/client";
+import { utilsKeys } from "./keys";
+import type { ApiHealthResponse } from "@workspace/api-types";
 
 export interface ApiHealthResult {
   isAvailable: boolean;
@@ -22,29 +15,33 @@ export interface ApiHealthResult {
  * Hook for querying the API health status
  */
 export function useApiHealth(
-  options?: Omit<UseQueryOptions<ApiHealthResult, Error, ApiHealthResult>, 'queryKey' | 'queryFn'>
+  options?: Omit<
+    UseQueryOptions<ApiHealthResult, Error, ApiHealthResult>,
+    "queryKey" | "queryFn"
+  >
 ) {
   return useQuery<ApiHealthResult, Error>({
     queryKey: utilsKeys.health(),
     queryFn: async (): Promise<ApiHealthResult> => {
       try {
-        // Use the client directly without the 'api' property
         // @ts-ignore - The API structure might be different than expected
         const res = await clientApi.utils.health.get();
 
-        if (!res.data) {
-          throw new Error('No data returned');
+        if (!res.data?.data) {
+          throw new Error("No data returned");
         }
+
+        const healthData = res.data.data as ApiHealthResponse;
 
         return {
           isAvailable: true,
-          message: `API is online (v${res.data.version || 'unknown'})`,
-          status: res.data as ApiHealthResponse,
+          message: `API is online (v${healthData.version || "unknown"})`,
+          status: healthData,
         };
       } catch (error) {
         return {
           isAvailable: false,
-          message: 'API is unavailable',
+          message: "API is unavailable",
           status: null,
         };
       }

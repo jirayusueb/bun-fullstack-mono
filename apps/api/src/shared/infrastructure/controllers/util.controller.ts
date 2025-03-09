@@ -1,28 +1,36 @@
 import { NotFoundError, ValidationError } from "@/shared/domain/errors";
+import type {
+  ApiHealthResponse,
+  ServerTimeResponse,
+} from "@/shared/domain/types";
 import { createSuccessResponse } from "@/shared/infrastructure/utils";
 import { Elysia, t } from "elysia";
 
 export const utilController = new Elysia({ prefix: "/api/utils" })
   // Health check endpoint
   .get("/health", () => {
-    return createSuccessResponse({
+    const healthData: ApiHealthResponse = {
       status: "ok",
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
       version: process.env.npm_package_version || "0.0.1",
       environment: process.env.NODE_ENV || "development",
-    });
+    };
+
+    return createSuccessResponse(healthData);
   })
 
   // Server time endpoint
   .get("/time", () => {
     const now = new Date();
 
-    return createSuccessResponse({
+    const timeData: ServerTimeResponse = {
       time: now.toISOString(),
       unix: Math.floor(now.getTime() / 1000),
       formatted: now.toLocaleString(),
-    });
+    };
+
+    return createSuccessResponse(timeData);
   })
 
   // Example error endpoints
