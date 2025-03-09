@@ -1,17 +1,15 @@
 import { QueryClient } from '@tanstack/react-query';
 
+/**
+ * Creates a new instance of QueryClient with default options
+ */
 export function createQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
         staleTime: 60 * 1000, // 1 minute
-        gcTime: 5 * 60 * 1000, // 5 minutes
-        retry: 1,
         refetchOnWindowFocus: false,
-        refetchOnMount: true,
-      },
-      mutations: {
-        retry: 0,
+        retry: 1,
       },
     },
   });
