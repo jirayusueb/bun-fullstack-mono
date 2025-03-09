@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useSignUpApollo } from "./sign-up-apollo";
+import { useSignUp } from "@/features/auth/api";
 
 // Define the form schema
 const signUpSchema = z.object({
@@ -19,17 +20,14 @@ const signUpSchema = z.object({
 export type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 /**
- * Logic layer for the sign-up form
- * Handles form state, validation, and connects to the Apollo layer
+ * Hook for managing the sign-up form
+ * Combines form state management with API integration
  */
-export function useSignUpLogic(onSuccess: () => void) {
-  // Get Apollo layer functions and state
-  const {
-    handleSubmit: submitToApi,
-    isLoading,
-    error,
-    setError,
-  } = useSignUpApollo();
+export function useSignUpForm(onSuccess: () => void) {
+  const [error, setError] = useState("");
+
+  // Get the sign-up mutation from the API
+  const signUpMutation = useSignUp();
 
   // Initialize form with react-hook-form
   const form = useForm<SignUpFormValues>({
@@ -44,23 +42,36 @@ export function useSignUpLogic(onSuccess: () => void) {
 
   // Handle form submission
   const onSubmit = async (values: SignUpFormValues) => {
-    // Call the Apollo layer to submit the form data
-    const result = await submitToApi({
-      name: values.name,
-      email: values.email,
-      password: values.password,
-    });
+    try {
+      // Clear any previous errors
+      setError("");
 
-    // If successful, call the onSuccess callback
-    if (result?.success) {
+      // Call the sign-up mutation
+      const response = await signUpMutation.mutateAsync({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      });
+
+      // Handle successful sign-up
+      console.log("Sign up successful:", response);
+
+      // Call the success callback
       onSuccess();
+    } catch (err) {
+      // Handle sign-up error
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to create account. Please try again."
+      );
     }
   };
 
   return {
     form,
     onSubmit,
-    isLoading,
+    isLoading: signUpMutation.isPending,
     error,
     setError,
   };

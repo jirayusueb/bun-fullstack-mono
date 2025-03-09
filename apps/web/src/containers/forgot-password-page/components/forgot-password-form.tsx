@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useForgotPasswordLogic } from "./forgot-password-logic";
+import { useForgotPasswordForm } from "../hooks/use-forgot-password-form";
 
 // UI Components
 import { Button } from "@workspace/ui/components/button";
@@ -25,13 +25,13 @@ import {
 } from "@workspace/ui/components/card";
 
 /**
- * View layer for the forgot password form
+ * Forgot password form component
  * Handles UI rendering and user interactions
  */
 export function ForgotPasswordForm() {
-  // Get form logic
+  // Get form logic from the hook
   const { form, onSubmit, isLoading, isSubmitted, error, submittedEmail } =
-    useForgotPasswordLogic();
+    useForgotPasswordForm();
 
   if (isSubmitted) {
     return (

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSignUpLogic } from "./sign-up-logic";
+import { useSignUpForm } from "../hooks/use-sign-up-form";
 
 // UI Components
 import { Button } from "@workspace/ui/components/button";
@@ -24,12 +24,12 @@ interface SignUpFormProps {
 }
 
 /**
- * View layer for the sign-up form
+ * Sign-up form component
  * Handles UI rendering and user interactions
  */
 export function SignUpForm({ onSuccess }: SignUpFormProps) {
-  // Get form logic
-  const { form, onSubmit, isLoading, error } = useSignUpLogic(onSuccess);
+  // Get form logic from the hook
+  const { form, onSubmit, isLoading, error } = useSignUpForm(onSuccess);
 
   return (
     <div className="mt-8">

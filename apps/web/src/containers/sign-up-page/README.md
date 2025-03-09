@@ -7,8 +7,10 @@ This directory contains the container component and related components for the s
 ```
 sign-up-page/
 ├── index.tsx           # Main container component
-└── components/         # Container-specific components
-    └── sign-up-form.tsx
+├── components/         # UI components
+│   └── sign-up-form.tsx
+└── hooks/              # Custom hooks
+    └── use-sign-up-form.tsx
 ```
 
 ## Components
@@ -16,6 +18,7 @@ sign-up-page/
 ### SignUpPage (index.tsx)
 
 The main container component for the sign-up page. It:
+
 - Renders the page layout and title
 - Imports and uses the SignUpForm component
 - Handles redirects after successful sign-up
@@ -24,30 +27,48 @@ The main container component for the sign-up page. It:
 ### SignUpForm (components/sign-up-form.tsx)
 
 A form component specific to the sign-up page. It:
-- Handles form submission and validation
-- Manages loading and error states
-- Provides fields for name, email, and password
+
+- Handles UI rendering and user interactions
+- Uses the useSignUpForm hook for form state and API integration
+- Renders form fields, validation messages, and error alerts
 - Includes terms and conditions checkbox
+
+## Hooks
+
+### useSignUpForm (hooks/use-sign-up-form.tsx)
+
+A custom hook that:
+
+- Manages form state using react-hook-form
+- Handles form validation using zod schemas
+- Integrates with the API using the useSignUp mutation hook
+- Handles error states and loading states
 - Calls the onSuccess callback after successful registration
 
 ## Usage
 
 ```tsx
 // In a Next.js page component
-import { SignUpPage } from '@/containers/sign-up-page';
+import { SignUpPage } from "@/containers/sign-up-page";
 // or
-import { SignUpPage } from '@/containers/auth'; // If exported from auth/index.ts
+import { SignUpPage } from "@/containers"; // If exported from containers/index.ts
 
 export default function SignUpPageRoute() {
   return <SignUpPage />;
 }
 ```
 
-## Implementation Notes
+## Implementation Pattern
 
-This container follows the flat folder structure pattern, where container-specific components are kept together with the container itself. This approach:
+This container follows a hooks-based pattern where:
 
-- Keeps related components together in a single directory
-- Makes it easier to find and manage components for a specific feature
-- Reduces the need to navigate between multiple directories
-- Allows for container-specific components that aren't meant to be reused elsewhere
+1. **API Integration** is handled by hooks in the `@/features/auth/api` directory
+2. **Form Logic** is encapsulated in custom hooks in the `hooks/` directory
+3. **UI Rendering** is handled by components in the `components/` directory
+
+This approach:
+
+- Separates concerns between data fetching, form logic, and UI rendering
+- Makes components more testable and maintainable
+- Allows for reuse of form logic across different components
+- Provides a clean interface between the UI and the API
