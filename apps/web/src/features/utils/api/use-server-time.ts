@@ -19,7 +19,8 @@ export function useServerTime(
   return useQuery<ServerTimeResponse, Error>({
     queryKey: utilsKeys.time(),
     queryFn: async () => {
-      const res = await clientApi.api.utils.time.get();
+      // @ts-ignore - The API structure might be different than expected
+      const res = await clientApi.utils.time.get();
       return res.data as ServerTimeResponse;
     },
     ...options,

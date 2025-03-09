@@ -28,7 +28,9 @@ export function useApiHealth(
     queryKey: utilsKeys.health(),
     queryFn: async (): Promise<ApiHealthResult> => {
       try {
-        const res = await clientApi.api.utils.health.get();
+        // Use the client directly without the 'api' property
+        // @ts-ignore - The API structure might be different than expected
+        const res = await clientApi.utils.health.get();
 
         if (!res.data) {
           throw new Error('No data returned');

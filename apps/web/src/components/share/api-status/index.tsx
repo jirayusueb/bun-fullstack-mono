@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@workspace/ui/components/button';
-import { useApiHealth } from '@/hooks/use-api-health';
+import { useApiHealth } from '@/features/utils/api/use-api-health';
 import { formatRelativeTime } from '@/lib/utils/format';
 
 export function ApiStatus() {

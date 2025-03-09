@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@workspace/ui/components/button';
-import { useServerTime } from '@/hooks/use-server-time';
+import { useServerTime } from '@/features/utils/api/use-server-time';
 
 export function WelcomeMessage() {
   const {
