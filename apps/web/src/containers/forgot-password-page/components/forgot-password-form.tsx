@@ -1,110 +1,144 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState } from "react";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+// UI Components
+import { Button } from "@workspace/ui/components/button";
+import { Input } from "@workspace/ui/components/input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@workspace/ui/components/form";
+import { Alert, AlertDescription } from "@workspace/ui/components/alert";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@workspace/ui/components/card";
+
+// Define the form schema
+const forgotPasswordSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+});
+
+// Define the form types
+type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 
 /**
  * Form component for handling forgot password functionality
  */
 export function ForgotPasswordForm() {
-  const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [submittedEmail, setSubmittedEmail] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // Initialize form with react-hook-form
+  const form = useForm<ForgotPasswordFormValues>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  const onSubmit = async (values: ForgotPasswordFormValues) => {
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
       // Here you would typically call your API to send a password reset email
-      // const response = await sendPasswordResetEmail(email);
+      // const response = await sendPasswordResetEmail(values.email);
 
       // For now, we'll just simulate a successful submission
-      console.log('Password reset requested for:', email);
+      console.log("Password reset requested for:", values.email);
 
       // Show success message
+      setSubmittedEmail(values.email);
       setIsSubmitted(true);
       setIsLoading(false);
     } catch (err) {
-      setError('Failed to send reset link. Please try again.');
+      setError("Failed to send reset link. Please try again.");
       setIsLoading(false);
     }
   };
 
   if (isSubmitted) {
     return (
-      <div className="mt-8 rounded-md bg-green-50 p-4">
-        <div className="flex">
-          <div className="flex-shrink-0">
-            <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-          </div>
-          <div className="ml-3">
-            <h3 className="text-sm font-medium text-green-800">Reset link sent</h3>
-            <div className="mt-2 text-sm text-green-700">
-              <p>We've sent a password reset link to {email}. Please check your inbox.</p>
-            </div>
-            <div className="mt-4">
-              <Link
-                href="/sign-in"
-                className="text-sm font-medium text-primary hover:underline"
-              >
-                Return to sign in
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Card className="mt-8 border-green-100 bg-green-50">
+        <CardHeader>
+          <CardTitle className="text-green-800">Reset link sent</CardTitle>
+          <CardDescription className="text-green-700">
+            We've sent a password reset link to {submittedEmail}. Please check
+            your inbox.
+          </CardDescription>
+        </CardHeader>
+        <CardFooter>
+          <Link
+            href="/sign-in"
+            className="text-sm font-medium text-primary hover:underline"
+          >
+            Return to sign in
+          </Link>
+        </CardFooter>
+      </Card>
     );
   }
 
   return (
     <div className="mt-8">
       {error && (
-        <div className="mb-4 rounded-md bg-red-50 p-4 text-sm text-red-700">
-          {error}
-        </div>
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       )}
 
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium">
-            Email address
-          </label>
-          <div className="mt-1">
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-              placeholder="you@example.com"
-            />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email address</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                    required
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" disabled={isLoading} className="w-full">
+            {isLoading ? "Sending..." : "Send reset link"}
+          </Button>
+
+          <div className="text-center text-sm">
+            <Link
+              href="/sign-in"
+              className="font-medium text-primary hover:underline"
+            >
+              Back to sign in
+            </Link>
           </div>
-        </div>
-
-        <div>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="flex w-full justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-          >
-            {isLoading ? 'Sending...' : 'Send reset link'}
-          </button>
-        </div>
-
-        <div className="text-center text-sm">
-          <Link href="/sign-in" className="font-medium text-primary hover:underline">
-            Back to sign in
-          </Link>
-        </div>
-      </form>
+        </form>
+      </Form>
     </div>
   );
 }
