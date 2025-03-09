@@ -2,24 +2,37 @@
   "name": "@workspace/api",
   "type": "module",
   "version": "1.0.50",
+  "module": "src/index.js",
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
     "build": "bun build src/index.ts --target node --outdir dist",
     "test": "bun test",
     "lint": "tsc --noEmit",
-    "clean": "rm -rf dist node_modules"
+    "clean": "rm -rf dist node_modules",
+    "db:generate": "drizzle-kit generate:pg",
+    "db:migrate": "bun run src/cli.ts migrate",
+    "db:studio": "drizzle-kit studio --port 3300",
+    "db:push": "drizzle-kit push"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
+    "@elysiajs/fn": "^0.6.1",
+    "@elysiajs/html": "^1.2.0",
     "@elysiajs/swagger": "^1.2.2",
     "@t3-oss/env-core": "^0.12.0",
+    "better-auth": "^1.2.3",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.40.0",
+    "drizzle-typebox": "^0.3.0",
     "elysia": "latest",
     "logixlysia": "^4.1.2",
+    "postgres": "^3.4.5",
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "bun-types": "latest"
-  },
-  "module": "src/index.js"
+    "bun-types": "latest",
+    "drizzle-kit": "^0.30.5",
+    "tsx": "^4.19.3"
+  }
 }

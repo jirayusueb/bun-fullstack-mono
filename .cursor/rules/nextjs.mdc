@@ -1,6 +1,6 @@
 ---
 description: Next.js React TypeScript
-globs: 
+globs: ./apps/web/*
 alwaysApply: false
 ---
 You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI and Tailwind.

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { QueryProvider } from "@/components/query-provider";
+import { QueryProvider } from '@/components/query-provider';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

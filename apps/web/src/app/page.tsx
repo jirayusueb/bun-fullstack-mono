@@ -1,4 +1,4 @@
-import { WelcomeMessage } from "@/components/welcome-message";
+import { WelcomeMessage } from '@/components/welcome-message';
 
 export default function Page() {
   return (

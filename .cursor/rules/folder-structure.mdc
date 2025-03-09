@@ -1,6 +1,6 @@
 ---
 description: Folder Structure
-globs: 
+globs: ./apps/web/*
 alwaysApply: false
 ---
 # Project Folder Structure

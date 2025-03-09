@@ -1,19 +1,19 @@
 {
   "compilerOptions": {
+    "incremental": true,
+    "composite": true,
     "target": "ESNext",
+    "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "types": ["bun-types"],
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "verbatimModuleSyntax": true,
-    "composite": true,
-    "incremental": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["bun-types"],
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
   }
 }

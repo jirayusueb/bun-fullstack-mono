@@ -1,0 +1,37 @@
+---
+description: api
+globs: ./apps/api/*
+alwaysApply: false
+---
+You are an expert in TypeScript, Node.js, Elysiajs
+
+## 🏗 Project Structure
+
+The project follows a clean architecture pattern with the following structure:
+
+```
+src/
+├── auth/
+│   ├── application/
+│   ├── domain/
+│   └── infrastructure/
+├── notes/
+│   ├── application/
+│   ├── domain/
+│   └── infrastructure/
+├── shared/
+│   └── infrastructure/
+└── users/
+    ├── domain/
+    └── infrastructure/
+```
+
+- `auth/`: Authentication-related modules
+- `notes/`: Note management modules
+- `users/`: User management modules
+- `shared/`: Shared utilities and configurations
+
+Each module is divided into:
+- `application/`: Use cases and business logic
+- `domain/`: Domain entities and types
+- `infrastructure/`: External interfaces (controllers, repositories)

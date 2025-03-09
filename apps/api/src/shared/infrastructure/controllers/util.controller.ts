@@ -1,28 +1,28 @@
-import { Elysia } from "elysia";
-import { env } from "../env";
+import { env } from '@/env';
+import { Elysia } from 'elysia';
 
-export const utilRoutes = new Elysia({ prefix: "" })
+export const utilController = new Elysia({ prefix: '/api/utils' })
   // Health check endpoint
   .get(
-    "/health",
+    '/health',
     () => ({
-      status: "ok",
+      status: 'ok',
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
-      version: process.env.npm_package_version || "1.0.0",
+      version: process.env.npm_package_version || '1.0.0',
       environment: env.NODE_ENV,
     }),
     {
       detail: {
-        tags: ["utils"],
-        description: "Health check endpoint",
+        tags: ['utils'],
+        description: 'Health check endpoint',
       },
-    }
+    },
   )
 
   // Get current server time
   .get(
-    "/time",
+    '/time',
     () => ({
       time: new Date().toISOString(),
       unix: Date.now(),
@@ -30,23 +30,23 @@ export const utilRoutes = new Elysia({ prefix: "" })
     }),
     {
       detail: {
-        tags: ["utils"],
-        description: "Get current server time",
+        tags: ['utils'],
+        description: 'Get current server time',
       },
-    }
+    },
   )
 
   // Echo endpoint - returns whatever is sent
   .post(
-    "/echo",
+    '/echo',
     ({ body }: { body: unknown }) => ({
       received: body,
       timestamp: new Date().toISOString(),
     }),
     {
       detail: {
-        tags: ["utils"],
-        description: "Echo back the request body",
+        tags: ['utils'],
+        description: 'Echo back the request body',
       },
-    }
+    },
   );
